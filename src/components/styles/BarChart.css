@@ -1,0 +1,25 @@
+.BarChart {
+  border: solid 1px red;
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.rectgdp {
+  fill: #1c7097; }
+
+.rectgdp:hover {
+  fill: #a9efe0; }
+
+.tooltip {
+  padding: 3px 7px;
+  border-radius: 5px;
+  background-color: rgba(64, 224, 208, 0.65);
+  color: #0b0512; }
+
+.tooltipMoney {
+  font-size: 12px bold;
+  margin-bottom: 2px; }
+
+.tooltipMonthYear {
+  font-size: 10px; }
