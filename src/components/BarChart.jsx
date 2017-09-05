@@ -64,7 +64,7 @@ class BarChart extends Component {
         //     } ));
         //
 
-        var xScale = scaleBand().rangeRound([0, width]);//.padding(0.1);
+        var xScale = scaleBand().range([0, width]).paddingOuter(0.5);
         xScale.domain(dataSource.data.map(
              function(datum) {
                  return datum[0];
