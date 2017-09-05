@@ -1,0 +1,11 @@
+.SimpleBarChart {
+  margin-top: 50px;
+  padding-top: 50px; }
+
+.chartRect {
+  fill: steelblue; }
+
+.chartText {
+  color: red;
+  font: 10px sans-serif;
+  text-anchor: end; }

@@ -1,9 +1,13 @@
 .BarChart {
-  border: solid 1px red;
-  margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center; }
+
+.yLabel {
+  color: red; }
+
+.yAxisLabel {
+  color: red; }
 
 .rectgdp {
   fill: #1c7097; }
