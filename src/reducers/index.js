@@ -21,6 +21,9 @@ export function isCountriesFetching (state = false, action) {
         case FETCH_COUNTRY_REQUEST: {
             return true;
         }
+        case FETCH_COUNTRY_SUCCESS: {
+            return false;
+        }
         default: {
             return state;
         }
