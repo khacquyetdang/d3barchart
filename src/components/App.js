@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; 
 import BarChart from './BarChart.jsx';
 import SimpleBarChart from './SimpleBarChart.jsx';
+import Controls from './Controls.jsx';
 import './styles/App.css';
-
+import { fetchCountries } from '../actions'
 class App extends Component {
+
+
+    componentDidMount(){
+        this.props.fetchCountries();
+    }
+
     render() {
         var dataJson = require('../data/GDP-data.json');
 
@@ -11,6 +19,7 @@ class App extends Component {
             <div className="App">
                 { /*<SimpleBarChart />*/}
                 <div className="AppContainer">
+                    <Controls></Controls>
                     <div><h1>Gross Domestic Product</h1></div>
                     <BarChart dataSource={dataJson}/>
                     <div><p className="description">{ dataJson.description }</p></div>
@@ -20,4 +29,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(null, {fetchCountries }) (App);
