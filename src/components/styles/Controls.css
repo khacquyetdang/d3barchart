@@ -1,3 +1,11 @@
+.Controls {
+  display: flex;
+  flex-direction: row;
+  margin: 5px; }
+
+.labelTitle {
+  margin: 5px; }
+
 .Select {
   position: relative; }
 
@@ -497,6 +505,7 @@ h6,
   overflow: hidden; }
 
 .checkbox-list > .checkbox {
+  text-align: left;
   clear: left;
   float: left;
   margin-top: .5em; }

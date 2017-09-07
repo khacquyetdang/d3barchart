@@ -17,7 +17,7 @@ class Controls extends Component {
             selectValue: 'FR',
             isCountriesFetching : true,
             countriesOptions : [],
-            intervalDate: {start:'2000', end:'2016'},
+            intervalDate: {start:'1960', end:'2017'},
         };
     }
 
@@ -55,6 +55,7 @@ class Controls extends Component {
 		this.setState({
 			selectValue: newValue
 		});
+        this.props.fetchCountryGdp(this.state.selectValue, this.state.intervalDate);
 	}
 
 
@@ -63,6 +64,7 @@ class Controls extends Component {
 
         return (
             <div className="Controls">
+                <h2 className="labelTitle">Gross Domestic Product</h2>
                 <Select ref="stateSelect"
                     autofocus options={this.state.countriesOptions}
                     simpleValue clearable={this.state.clearable}

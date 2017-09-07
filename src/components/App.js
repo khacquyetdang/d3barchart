@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 import BarChart from './BarChart.jsx';
 import SimpleBarChart from './SimpleBarChart.jsx';
 import Controls from './Controls.jsx';
@@ -20,7 +20,7 @@ class App extends Component {
                 { /*<SimpleBarChart />*/}
                 <div className="AppContainer">
                     <Controls></Controls>
-                    <div><h1>Gross Domestic Product</h1></div>
+                    <div></div>
                     <BarChart dataSource={dataJson}/>
                     <div><p className="description">{ dataJson.description }</p></div>
                 </div>

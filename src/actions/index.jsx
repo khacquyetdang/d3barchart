@@ -75,7 +75,7 @@ export const fetchCountries = () => (dispatch, getState) => {
 
 
 export const fetchCountryGdp = (countryId, intervalDate) => (dispatch, getState) => {
-    console.log("fetchCountryGdp actions");
+    console.log("fetchCountryGdp actions countryId", countryId);
     dispatch(fetchCountryGdpRequest());
     var page = 1;
     webapi.fetchCountryGDP(countryId, intervalDate, page).then(response => {
