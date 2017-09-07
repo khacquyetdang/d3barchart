@@ -1,7 +1,26 @@
-import { FETCH_COUNTRY_REQUEST, FETCH_COUNTRY_SUCCESS } from '../constants.js';
+import { FETCH_COUNTRY_REQUEST,
+    FETCH_COUNTRY_SUCCESS,
+    FETCH_COUNTRY_GDP_REQUEST,
+    FETCH_COUNTRY_GDP_SUCCESS,
+    FETCH_COUNTRY_GDP_FAILURE,
+    FETCH_COUNTRY_GDP_END
+} from '../constants.js';
 
 import {combineReducers} from 'redux';
 
+
+
+export function countryGdp(state = [], action) {
+
+    switch (action.type) {
+        case FETCH_COUNTRY_GDP_SUCCESS: {
+            return action.response[1];
+        }
+        default: {
+            return state;
+        }
+    }
+};
 
 
 export function countries(state = [], action) {
@@ -15,6 +34,20 @@ export function countries(state = [], action) {
         }
     }
 };
+
+export function isCountryGDPFetching (state = false, action) {
+    switch (action.type) {
+        case FETCH_COUNTRY_GDP_REQUEST: {
+            return true;
+        }
+        case FETCH_COUNTRY_GDP_SUCCESS: {
+            return false;
+        }
+        default: {
+            return state;
+        }
+    }
+}
 
 export function isCountriesFetching (state = false, action) {
     switch (action.type) {
@@ -33,6 +66,8 @@ export function isCountriesFetching (state = false, action) {
 const appReducer = combineReducers({
     countries,
     isCountriesFetching,
+    isCountryGDPFetching,
+    countryGdp
 });
 
 

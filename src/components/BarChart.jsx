@@ -14,6 +14,17 @@ class BarChart extends Component {
         this.createBarChart = this.createBarChart.bind(this);
     }
 
+    componentWillReceiveProps(nextProps)
+    {
+        this.props = nextProps;
+        
+        this.setState({isCountriesFetching: this.props.isCountriesFetching,
+            countriesOptions,
+            selectValue: 'FR'});
+            this.props.fetchCountryGdp(this.state.selectValue, this.state.intervalDate);
+        }
+    }
+
     componentDidMount() {
         this.createBarChart()
 
@@ -167,4 +178,14 @@ class BarChart extends Component {
             </div>)
     }
 }
-export default BarChart
+
+function mapStateToProps(state)
+{
+    const { isCountryGDPFetching,
+    countryGdp } = state;
+    return {
+        isCountryGDPFetching,
+        countryGdp
+    }
+}
+export default connect(mapStateToProps) (BarChart);

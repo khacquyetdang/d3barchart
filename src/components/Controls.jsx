@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Autosuggest from 'react-autosuggest';
+import Select  from 'react-select';
 //import { form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import './styles/Controls.css';
-import Select  from 'react-select';
 
-const autraliaState =  [
-    { value: 'australian-capital-territory', label: 'Australian Capital Territory', },
-    { value: 'new-south-wales', label: 'New South Wales', className: 'State-NSWttt' },
-    { value: 'victoria', label: 'Victoria', className: 'State-Vic' },
-    { value: 'queensland', label: 'Queensland', className: 'State-Qld' },
-    { value: 'western-australia', label: 'Western Australia', className: 'State-WA' },
-    { value: 'south-australia', label: 'South Australia', className: 'State-SA' },
-    { value: 'tasmania', label: 'Tasmania', className: 'State-Tas' },
-    { value: 'northern-territory', label: 'Northern Territory', className: 'State-NT' },
-];
+import { fetchCountryGdp } from '../actions'
 
 class Controls extends Component {
 
@@ -26,7 +16,8 @@ class Controls extends Component {
             clearable: true,
             selectValue: 'FR',
             isCountriesFetching : true,
-            countriesOptions : []
+            countriesOptions : [],
+            intervalDate: {start:'2000', end:'2016'},
         };
     }
 
@@ -40,7 +31,7 @@ class Controls extends Component {
         this.setState({isCountriesFetching: this.props.isCountriesFetching,
         countriesOptions,
         selectValue: 'FR'});
-
+        this.props.fetchCountryGdp(this.state.selectValue, this.state.intervalDate);
     }
 
 
@@ -58,6 +49,13 @@ class Controls extends Component {
     logChange = (val) => {
         console.log("Selected: " + JSON.stringify(val));
     }
+
+    updateValue = (newValue) => {
+		console.log('State changed to ' + newValue);
+		this.setState({
+			selectValue: newValue
+		});
+	}
 
 
     render() {
@@ -87,4 +85,4 @@ function mapStateToProps(state)
         isCountriesFetching
     }
 }
-export default connect(mapStateToProps, null) (Controls);;
+export default connect(mapStateToProps, { fetchCountryGdp }) (Controls);
