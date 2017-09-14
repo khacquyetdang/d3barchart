@@ -120,8 +120,13 @@ class BarChart extends Component {
 
         mainNode.selectAll("*").remove();
 
-        var enterNode = mainNode.attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        var widthWithMargin = width + margin.left + margin.right;
+        var heightWithMargin = height + margin.left + margin.right;
+
+        var enterNode = mainNode.attr("width", widthWithMargin)
+        .attr("height", heightWithMargin)
+        .attr("viewBox", "0 0 " + widthWithMargin + " " + heightWithMargin)
+        .attr("preserveAspectRatio", "xMidYMid meet")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
