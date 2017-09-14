@@ -2,7 +2,7 @@ var myHeaders = new Headers();
 
 var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 export function fetchCountryData() {
