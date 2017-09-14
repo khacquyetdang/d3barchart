@@ -51,11 +51,14 @@ class Controls extends Component {
     }
 
     updateValue = (newValue) => {
-		console.log('State changed to ' + newValue);
-		this.setState({
-			selectValue: newValue
-		});
-        this.props.fetchCountryGdp(this.state.selectValue, this.state.intervalDate);
+        console.log('State changed to ' + newValue);
+        this.setState(
+            {
+                selectValue: newValue
+            }, () => {
+            this.props.fetchCountryGdp(this.state.selectValue, this.state.intervalDate);
+            }
+        );
 	}
 
 
@@ -71,7 +74,7 @@ class Controls extends Component {
                     name="selected-state"
                     disabled={this.state.disabled}
                     value={this.state.selectValue}
-                    onChange={this.updateValue}
+                    onChange={(newValue) => { this.updateValue(newValue); }}
                     searchable={this.state.searchable}
                     isLoading={this.state.isCountriesFetching}/>
             </div>

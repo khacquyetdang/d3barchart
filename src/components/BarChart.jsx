@@ -6,11 +6,11 @@ import { select } from 'd3-selection';
 import { axisBottom, axisLeft } from 'd3-axis';
 import d3tip from 'd3-tip';
 import moment from 'moment';
-import { timeDay, timeYear, timeMonth  } from 'd3-time';
+import { timeDay, timeYear, timeMonth } from 'd3-time';
 import './styles/BarChart.css';
 
 class BarChart extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -26,23 +26,22 @@ class BarChart extends Component {
                 isCountriesFetching: this.props.isCountriesFetching,
             }
         );
-        this.createBarChart()
-
+        this.createBarChart();
         //this.props.fetchCountryGdp(this.state.selectValue, this.state.intervalDate);
     }
 
     componentDidMount() {
-        this.createBarChart()
-
+        this.createBarChart();
         //this.createBarChartSimple();
     }
 
     componentDidUpdate() {
-        this.createBarChart()
+        this.createBarChart();
         //this.createBarChartSimple();
     }
 
     createBarChart = () => {
+
         var dataSource = this.props.countryGdp;
 
         dataSource = dataSource.map(function(gdpByYear) {
@@ -54,7 +53,11 @@ class BarChart extends Component {
             );
         });
 
-        dataSource = dataSource.sort(function(a, b){return a.date-b.date});
+        dataSource = dataSource.sort(
+            function(a, b) {
+                return a.date-b.date;
+            }
+        );
 
         if (dataSource === undefined || dataSource === null || dataSource.length === 0)
         {
@@ -68,6 +71,7 @@ class BarChart extends Component {
         var maxDate = max(dataSource, function(gdpByYear) {
             return gdpByYear.date;
         });
+
         var minDate = min(dataSource, function(gdpByYear) {
             return gdpByYear.date;
         });
@@ -87,123 +91,121 @@ class BarChart extends Component {
         yScale.domain([0, dataMax]);
 
 
-
-        // var xScale = scaleBand().rangeRound([0, width]);//.padding(0.1);
-        // xScale.domain(dataJson.data.map(
-        //     function(datum) {
-        //         var dateD = new Date(datum[0]);
-        //         //return dateD;
-        //         return moment(dateD).format('Y-M');
-        //     } ));
-        //
-
         var xScale = scaleBand().range([0, width]).paddingOuter(0.6).paddingInner(0.1);
+
         xScale.domain(dataSource.map(
             function(datum) {
                 return datum.date;
-            } ));
-
-            var barWidth = Math.ceil(width  / dataSource.length);
-            //var barWidth = 1;
-            var tip = d3tip()
-            .attr('class', 'd3-tip')
-            .offset([5, 0])
-            .html(function(d) {
-                var money = '$' + Math.ceil(d.value) + " Billion";
-                //return '<div className="tooltip">' + money + " date "+ d.date + "</div>";
-                return  "<div class=\"tooltip2\"> <div class=\"tooltipMoney\"> " + money +
-                "  </div><div class=\"tooltipMonthYear\"> " + d.date + " </div> </div>";
-            });
-
-
-            var yAxis = axisLeft(yScale);
-            var xAxis = axisBottom(xScale);
-
-
-            var mainNode = select(node);
-
-            mainNode.selectAll("*").remove();
-
-            var enterNode = mainNode.attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            //
-            enterNode.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
-
-            enterNode.append("g")
-            .attr("class", "axis axis--y")
-            .call(yAxis.ticks(10, ",f"));
-
-            enterNode.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 25)
-            .attr("x", -215)
-            .attr("class", "yAxisLabel")
-            .text("GDP in Billions, " + dataSource[0].country.value);
-
-
-            enterNode.selectAll('.rectgdp')
-            .data(dataSource)
-            .enter().append("rect")
-            .attr('class','rectgdp')
-            .attr("x", function(d) {
-                //var dd = new Date(d[0]);
-                //return xScale(moment(dd).format('Y-M'));
-                return xScale(d.date);
             })
-            .attr("y", function(d) { return yScale(d.value); })
-            //.attr('width', barWidth)
-            .attr('width', xScale.bandwidth())
-            .attr('height',
-            function(d){
-                return height - yScale(d.value);
-            })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
+        );
 
-            enterNode.call(tip);
+        var barWidth = Math.ceil(width  / dataSource.length);
+        //var barWidth = 1;
+        var tip = d3tip()
+        .attr('class', 'd3-tip')
+        .offset([5, 0])
+        .html(function(d) {
+            var money = '$' + Math.ceil(d.value) + " Billion";
+            //return '<div className="tooltip">' + money + " date "+ d.date + "</div>";
+            return  "<div class=\"tooltip2\"> <div class=\"tooltipMoney\"> " + money +
+            "  </div><div class=\"tooltipMonthYear\"> " + d.date + " </div> </div>";
+        });
 
-            var xAxis = enterNode.select(".axis--x");
-            var ticks = xAxis.selectAll(".tick text");
 
-            var lines = xAxis.selectAll(".tick line");
+        var yAxis = axisLeft(yScale);
+        var xAxis = axisBottom(xScale);
 
-            var steps = Math.ceil(dataSource.length / 16);
 
-            lines.attr("class", function(d,i){
-                if((i%steps) !== 0) {
-                    select(this).remove();
-                }
-            });
+        var mainNode = select(node);
 
-            ticks.attr("class", function(d,i){
-                if((i%steps) !== 0) {
-                    select(this).remove();
-                }
-            });
-        }
+        mainNode.selectAll("*").remove();
 
-        render() {
-            return (
-                <div className="BarChart">
-                    <svg ref={node => this.node = node}>
-                    </svg>
-                </div>)
+        var enterNode = mainNode.attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        //
+        enterNode.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+        enterNode.append("g")
+        .attr("class", "axis axis--y")
+        .call(yAxis.ticks(10, ",f"));
+
+        enterNode.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 25)
+        .attr("x", -215)
+        .attr("class", "yAxisLabel")
+        .text("GDP in Billions, " + dataSource[0].country.value);
+
+
+        enterNode.selectAll('.rectgdp')
+        .data(dataSource)
+        .enter().append("rect")
+        .attr('class','rectgdp')
+        .attr("x", function(d) {
+            //var dd = new Date(d[0]);
+            //return xScale(moment(dd).format('Y-M'));
+            return xScale(d.date);
+        })
+        .attr("y", function(d) { return yScale(d.value); })
+        //.attr('width', barWidth)
+        .attr('width', xScale.bandwidth())
+        .attr('height',
+        function(d){
+            return height - yScale(d.value);
+        })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
+
+        enterNode.call(tip);
+
+        var xAxis = enterNode.select(".axis--x");
+        var ticks = xAxis.selectAll(".tick text");
+
+        var lines = xAxis.selectAll(".tick line");
+
+        var steps = Math.ceil(dataSource.length / 16);
+
+        lines.attr("class", function(d,i) {
+            if((i%steps) !== 0) {
+                select(this).remove();
             }
-        }
+        });
 
-        function mapStateToProps(state)
-        {
-            const { isCountryGDPFetching,
-                countryGdp } = state;
-                return {
-                    isCountryGDPFetching,
-                    countryGdp
-                }
+        ticks.attr("class", function(d,i) {
+            if((i%steps) !== 0) {
+                select(this).remove();
             }
-            export default connect(mapStateToProps) (BarChart);
+        });
+    }
+
+    render() {
+        return (
+            <div className="BarChart">
+                <svg ref={node => this.node = node}>
+                </svg>
+            </div>
+        );
+    }
+}
+
+function mapStateToProps(state)
+{
+    console.log("BarChart mapStateToProps: ");
+    console.log(state.countryGdp);
+    const {
+        isCountryGDPFetching,
+        countryGdp
+    } = state;
+
+    return {
+        isCountryGDPFetching,
+        countryGdp
+    }
+}
+export default connect(mapStateToProps) (BarChart);
