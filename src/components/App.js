@@ -21,8 +21,7 @@ class App extends Component {
                 <div className="AppContainer">
                     <Controls></Controls>
                     <div></div>
-                    <BarChart dataSource={dataJson}/>
-                    <div><p className="description">{ dataJson.description }</p></div>
+                    <BarChart />
                 </div>
             </div>
         );

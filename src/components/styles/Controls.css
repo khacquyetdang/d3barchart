@@ -1,10 +1,14 @@
 .Controls {
   display: flex;
-  flex-direction: row;
-  margin: 5px; }
+  flex-direction: column;
+  margin: 5px;
+  align-items: center; }
 
-.labelTitle {
-  margin: 5px; }
+.help {
+  font-size: 10px;
+  margin-top: 3px;
+  font-style: italic;
+  font-weight: lighter; }
 
 .Select {
   position: relative; }

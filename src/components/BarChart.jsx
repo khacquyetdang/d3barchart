@@ -83,9 +83,10 @@ class BarChart extends Component {
         const node = this.node;
 
         const dataMax = maxGDPOverYear;
-        var width = 1000;
-        var height = 400;
-        var margin = {top: 20, right: 30, bottom: 30, left: 50};
+        var width = 960;
+        var height = 500;
+
+        var margin = {top: 40, right: 10, bottom: 30, left: 10};
 
         var yScale = scaleLinear().rangeRound([height, 0]);
         yScale.domain([0, dataMax]);
@@ -121,7 +122,14 @@ class BarChart extends Component {
         mainNode.selectAll("*").remove();
 
         var widthWithMargin = width + margin.left + margin.right;
-        var heightWithMargin = height + margin.left + margin.right;
+        var heightWithMargin = height + margin.top + margin.bottom;
+
+
+        mainNode.append("text")
+        .attr("y", 30)
+        .attr("x", widthWithMargin / 3)
+        .attr("class", "labelTitle")
+        .text("Gross Domestic Product");
 
         var enterNode = mainNode.attr("width", widthWithMargin)
         .attr("height", heightWithMargin)
@@ -143,9 +151,11 @@ class BarChart extends Component {
         enterNode.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 25)
-        .attr("x", -215)
+        .attr("x", -225)
         .attr("class", "yAxisLabel")
+        .attr("font-size", 20)
         .text("GDP in Billions, " + dataSource[0].country.value);
+
 
 
         enterNode.selectAll('.rectgdp')
@@ -192,7 +202,7 @@ class BarChart extends Component {
     render() {
         return (
             <div className="BarChart">
-                <svg ref={node => this.node = node}>
+                <svg id="chart" ref={node => this.node = node}>
                 </svg>
             </div>
         );

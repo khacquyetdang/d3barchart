@@ -67,8 +67,8 @@ class Controls extends Component {
 
         return (
             <div className="Controls">
-                <h2 className="labelTitle">Gross Domestic Product</h2>
                 <Select ref="stateSelect"
+                    addLabelText="Toto"
                     autofocus options={this.state.countriesOptions}
                     simpleValue clearable={this.state.clearable}
                     name="selected-state"
@@ -77,6 +77,7 @@ class Controls extends Component {
                     onChange={(newValue) => { this.updateValue(newValue); }}
                     searchable={this.state.searchable}
                     isLoading={this.state.isCountriesFetching}/>
+                <h4 className="help">Select your country</h4>
             </div>
         );
     }
