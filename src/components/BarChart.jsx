@@ -129,11 +129,12 @@ class BarChart extends Component {
         switch (browser && browser.name) {
             case 'firefox': {
                 margin.top = 50;
-                margin.left = 50;
+                margin.left = 30;
                 break;
             }
-            default:
-            console.log('not supported');
+            default:{
+                console.log('not supported');
+            }
         }
 
         var widthWithMargin = width + margin.left + margin.right;
