@@ -5,6 +5,7 @@ import { max, min } from 'd3-array';
 import { select } from 'd3-selection';
 import { axisBottom, axisLeft } from 'd3-axis';
 import d3tip from 'd3-tip';
+import browser from 'detect-browser';
 import moment from 'moment';
 import { timeDay, timeYear, timeMonth } from 'd3-time';
 import './styles/BarChart.css';
@@ -75,7 +76,8 @@ class BarChart extends Component {
 
         if (dataSource === undefined || dataSource === null || dataSource.length === 0)
         {
-            if (this.props.isCountryGDPFetching === false)
+            if (this.props.isCountryGDPFetching === false
+                && this.props.isCountriesFetching === true)
             {
                 return this.createBarChartEmptyData();
             }
@@ -123,7 +125,16 @@ class BarChart extends Component {
         var height = 500;
 
 
-        var margin = {top: 50, right: 30, bottom: 50, left: 50};
+        var margin = {top: 30, right: 25, bottom: 30, left: 25};
+        switch (browser && browser.name) {
+            case 'firefox': {
+                margin.top = 50;
+                margin.left = 50;
+                break;
+            }
+            default:
+            console.log('not supported');
+        }
 
         var widthWithMargin = width + margin.left + margin.right;
         var heightWithMargin = height + margin.top + margin.bottom;
@@ -191,7 +202,7 @@ class BarChart extends Component {
         enterNode.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 25)
-        .attr("x", -225)
+        .attr("x", 0 - height  * 0.65)
         .attr("class", "yAxisLabel")
         .attr("font-size", 20)
         .text("GDP in Billions, " + dataSource[0].country.value);
@@ -255,11 +266,13 @@ function mapStateToProps(state)
     console.log("BarChart mapStateToProps: ");
     console.log(state.countryGdp);
     const {
+        isCountriesFetching,
         isCountryGDPFetching,
         countryGdp
     } = state;
 
     return {
+        isCountriesFetching,
         isCountryGDPFetching,
         countryGdp
     }
