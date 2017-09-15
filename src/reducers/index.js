@@ -14,6 +14,8 @@ export function countryGdp(state = [], action) {
 
     switch (action.type) {
         case FETCH_COUNTRY_GDP_SUCCESS: {
+            if (action.response[1] === null)
+                return [];
             return action.response[1];
         }
         default: {
@@ -27,6 +29,8 @@ export function countries(state = [], action) {
 
     switch (action.type) {
         case FETCH_COUNTRY_SUCCESS: {
+            if (action.response[1] === null)
+                return [];
             return action.response[1];
         }
         default: {

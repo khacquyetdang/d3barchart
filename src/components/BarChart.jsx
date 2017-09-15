@@ -40,10 +40,42 @@ class BarChart extends Component {
         //this.createBarChartSimple();
     }
 
+    createBarChartEmptyData = () => {
+
+        const node = this.node;
+
+        var width = 960;
+        var height = 500;
+
+        var margin = {top: 40, right: 10, bottom: 30, left: 10};
+
+        var widthWithMargin = width + margin.left + margin.right;
+        var heightWithMargin = height + margin.top + margin.bottom;
+
+        var mainNode = select(node);
+
+        mainNode.selectAll("*").remove();
+
+
+        mainNode.append("text")
+        .attr("y", heightWithMargin / 2)
+        .attr("x", widthWithMargin / 3)
+        .attr("class", "labelTitle")
+        .attr("font-size", 30)
+        .attr("fill", "red")
+        .text("Data is not availaible for this country.");
+    }
     createBarChart = () => {
 
         var dataSource = this.props.countryGdp;
 
+        if (dataSource === undefined || dataSource === null || dataSource.length === 0)
+        {
+            if (this.props.isCountryGDPFetching === false)
+            {
+                return this.createBarChartEmptyData();
+            }
+        }
         dataSource = dataSource.map(function(gdpByYear) {
             return Object.assign({},
                 gdpByYear, {
@@ -88,6 +120,10 @@ class BarChart extends Component {
 
         var margin = {top: 40, right: 10, bottom: 30, left: 10};
 
+        var widthWithMargin = width + margin.left + margin.right;
+        var heightWithMargin = height + margin.top + margin.bottom;
+
+
         var yScale = scaleLinear().rangeRound([height, 0]);
         yScale.domain([0, dataMax]);
 
@@ -121,8 +157,6 @@ class BarChart extends Component {
 
         mainNode.selectAll("*").remove();
 
-        var widthWithMargin = width + margin.left + margin.right;
-        var heightWithMargin = height + margin.top + margin.bottom;
 
 
         mainNode.append("text")
