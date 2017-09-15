@@ -41,6 +41,20 @@ class BarChart extends Component {
         //this.createBarChartSimple();
     }
 
+    createMargin = () => {
+        var margin = {top: 30, right: 25, bottom: 30, left: 45};
+        switch (browser && browser.name) {
+            case 'firefox': {
+                margin.top = 50;
+                margin.left = 45;
+                break;
+            }
+            default:{
+                console.log('not supported');
+            }
+        }
+        return margin;
+    }
     createBarChartEmptyData = () => {
 
         const node = this.node;
@@ -48,8 +62,7 @@ class BarChart extends Component {
         var width = 960;
         var height = 500;
 
-        var margin = {top: 40, right: 10, bottom: 30, left: 10};
-
+        var margin = this.createMargin();
         var widthWithMargin = width + margin.left + margin.right;
         var heightWithMargin = height + margin.top + margin.bottom;
 
@@ -77,7 +90,7 @@ class BarChart extends Component {
         if (dataSource === undefined || dataSource === null || dataSource.length === 0)
         {
             if (this.props.isCountryGDPFetching === false
-                && this.props.isCountriesFetching === true)
+                && this.props.isCountriesFetching === false)
             {
                 return this.createBarChartEmptyData();
             }
@@ -125,17 +138,7 @@ class BarChart extends Component {
         var height = 500;
 
 
-        var margin = {top: 30, right: 25, bottom: 30, left: 25};
-        switch (browser && browser.name) {
-            case 'firefox': {
-                margin.top = 50;
-                margin.left = 30;
-                break;
-            }
-            default:{
-                console.log('not supported');
-            }
-        }
+        var margin = this.createMargin();
 
         var widthWithMargin = width + margin.left + margin.right;
         var heightWithMargin = height + margin.top + margin.bottom;
