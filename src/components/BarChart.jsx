@@ -56,6 +56,10 @@ class BarChart extends Component {
 
         mainNode.selectAll("*").remove();
 
+        mainNode.attr("width", widthWithMargin)
+        .attr("height", heightWithMargin)
+        .attr("viewBox", "0 0 " + widthWithMargin + " " + heightWithMargin)
+        .attr("preserveAspectRatio", "xMidYMid meet")
 
         mainNode.append("text")
         .attr("y", heightWithMargin / 2)
@@ -118,7 +122,8 @@ class BarChart extends Component {
         var width = 960;
         var height = 500;
 
-        var margin = {top: 40, right: 10, bottom: 30, left: 10};
+
+        var margin = {top: 50, right: 30, bottom: 50, left: 50};
 
         var widthWithMargin = width + margin.left + margin.right;
         var heightWithMargin = height + margin.top + margin.bottom;
@@ -171,6 +176,7 @@ class BarChart extends Component {
         .attr("preserveAspectRatio", "xMidYMid meet")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
         //
         enterNode.append("g")
@@ -236,7 +242,8 @@ class BarChart extends Component {
     render() {
         return (
             <div className="BarChart">
-                <svg id="chart" ref={node => this.node = node}>
+                <svg id="chart"
+                     ref={node => this.node = node}>
                 </svg>
             </div>
         );
