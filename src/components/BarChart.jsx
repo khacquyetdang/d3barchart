@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BounceLoader } from 'react-spinners';
 import { connect } from 'react-redux';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { max, min } from 'd3-array';
@@ -253,12 +254,30 @@ class BarChart extends Component {
             }
         });
     }
+    renderLoading = () =>
+    {
+        if (this.props.isCountryGDPFetching === true
+            || this.props.isCountriesFetching === true
+        ) {
+
+            return (
+                <BounceLoader
+                    color={'#123abc'}
+                    loading={true}
+                    />
+            );
+        }
+    }
 
     render() {
+
         return (
             <div className="BarChart">
+                {
+                    this.renderLoading()
+                }
                 <svg id="chart"
-                     ref={node => this.node = node}>
+                    ref={node => this.node = node}>
                 </svg>
             </div>
         );

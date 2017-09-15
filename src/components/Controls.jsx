@@ -51,6 +51,10 @@ class Controls extends Component {
     }
 
     updateValue = (newValue) => {
+        if (newValue === null)
+        {
+            return;
+        }
         console.log('State changed to ' + newValue);
         this.setState(
             {
